@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.fz.shop.mapper.CategoryMapper">
+    <select id="findAll" resultType="net.fz.shop.bean.Category">
+        SELECT * FROM t_category;
+    </select>
+
+    <select id="findById" resultType="net.fz.shop.bean.Category">
+        SELECT * FROM t_category WHERE id=#{id};
+    </select>
+</mapper>

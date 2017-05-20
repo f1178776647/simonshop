@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--处理对静态资源的请求-->
+    <mvc:resources mapping="/images/**" location="/WEB-INF/images/"/>
+    <mvc:resources mapping="/css/**" location="/WEB-INF/css/"/>
+    <mvc:resources mapping="/scripts/**" location="/WEB-INF/scripts/"/>
+
+    <!--采用注解驱动-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json; charset=UTF-8</value>
+                        <value>application/x-www-form-urlencoded; charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--扫描添加Controller注解的类-->
+    <context:component-scan base-package="net.fz.shop.webmvc"/>
+
+    <!--定义视图控制器-->
+    <mvc:view-controller path="toLeft" view-name="backend/left"/>
+    <mvc:view-controller path="toTop" view-name="backend/top"/>
+    <mvc:view-controller path="toMain" view-name="backend/main"/>
+    <mvc:view-controller path="todo" view-name="backend/todo"/>
+    <mvc:view-controller path="user/toRegister" view-name="frontend/register"/>
+    <mvc:view-controller path="user/toLogin" view-name="login"/>
+
+    <!--定义内部资源视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:viewClass="org.springframework.web.servlet.view.JstlView"
+          p:prefix="/WEB-INF/view/"
+          p:suffix=".jsp"/>
+
+    <!-- 扫描业务组件,让spring不扫描带有@Service注解的类(留在spring-config.xml中扫描@Service注解的类),防止事
+    务失效 -->
+    <context:component-scan base-package="net.fz.shop">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+</beans>

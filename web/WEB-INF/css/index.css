@@ -1,0 +1,11 @@
+/* 样式 */
+body {
+    margin:0px;
+    text-align:center;
+    background:url("../images/background.jpg") no-repeat;
+    background-size:100%
+}
+
+table{
+    margin: 0px auto;
+}
